@@ -1,0 +1,44 @@
+{
+  "info": {
+    "name": "API Exclusão Beneficiários — Sistema de Saúde",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Coleção de testes de API para exclusão de beneficiários do plano de saúde"
+  },
+  "variable": [{ "key": "base_url", "value": "https://api.sistema-saude.com" }],
+  "item": [
+    {
+      "name": "API-001: Exclusão Válida — Demissão",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "raw": "{\"cpf\":\"123.456.789-09\",\"motivo\":\"DEMISSAO\",\"data_exclusao\":\"2025-07-01\"}"
+        }
+      },
+      "response_esperada": { "status": 200, "mensagem": "Beneficiário excluído com sucesso" }
+    },
+    {
+      "name": "API-003: ERRO — Óbito sem Data",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "body": {
+          "raw": "{\"cpf\":\"123.456.789-09\",\"motivo\":\"OBITO\"}"
+        }
+      },
+      "response_esperada": { "status": 400, "erro": "data_obito obrigatória para motivo OBITO" }
+    },
+    {
+      "name": "API-004: ERRO — CPF Inválido",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "body": {
+          "raw": "{\"cpf\":\"000.000.000-00\",\"motivo\":\"DEMISSAO\"}"
+        }
+      },
+      "response_esperada": { "status": 422, "erro": "CPF inválido ou inexistente" }
+    }
+  ]
+}
