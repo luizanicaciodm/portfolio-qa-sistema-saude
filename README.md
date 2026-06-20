@@ -1,4 +1,4 @@
-# 🏥 Portfólio QA — Sistema de Saúde
+# 🏥 Portfólio QA: Sistema de Saúde
 > Plano de Saúde | Laboratório Clínico | Análises Clínicas
 
 ## 📌 Sobre o Projeto
