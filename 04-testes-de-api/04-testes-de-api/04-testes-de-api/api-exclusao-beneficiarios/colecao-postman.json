@@ -2,18 +2,39 @@
   "info": {
     "name": "API Exclusão Beneficiários — Sistema de Saúde",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Coleção de testes de API para exclusão de beneficiários do plano de saúde"
+    "description": "Coleção de testes de API para exclusão de beneficiários do plano de saúde. Cobre os 8 cenários documentados no README deste módulo."
   },
-  "variable": [{ "key": "base_url", "value": "https://api.sistema-saude.com" }],
+  "variable": [
+    { "key": "base_url", "value": "https://api.sistema-saude.com" },
+    { "key": "token", "value": "SEU_TOKEN_VALIDO_AQUI" }
+  ],
   "item": [
     {
       "name": "API-001: Exclusão Válida — Demissão",
       "request": {
         "method": "POST",
         "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
         "body": {
           "raw": "{\"cpf\":\"123.456.789-09\",\"motivo\":\"DEMISSAO\",\"data_exclusao\":\"2025-07-01\"}"
+        }
+      },
+      "response_esperada": { "status": 200, "mensagem": "Beneficiário excluído com sucesso" }
+    },
+    {
+      "name": "API-002: Exclusão Válida — Óbito com Data",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "raw": "{\"cpf\":\"123.456.789-09\",\"motivo\":\"OBITO\",\"data_exclusao\":\"2025-07-01\",\"data_obito\":\"2025-07-01\"}"
         }
       },
       "response_esperada": { "status": 200, "mensagem": "Beneficiário excluído com sucesso" }
@@ -23,22 +44,90 @@
       "request": {
         "method": "POST",
         "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
         "body": {
           "raw": "{\"cpf\":\"123.456.789-09\",\"motivo\":\"OBITO\"}"
         }
       },
-      "response_esperada": { "status": 400, "erro": "data_obito obrigatória para motivo OBITO" }
+      "response_esperada": { "status": 400, "erro": "data_obito é obrigatória quando motivo = OBITO" }
     },
     {
       "name": "API-004: ERRO — CPF Inválido",
       "request": {
         "method": "POST",
         "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
         "body": {
           "raw": "{\"cpf\":\"000.000.000-00\",\"motivo\":\"DEMISSAO\"}"
         }
       },
       "response_esperada": { "status": 422, "erro": "CPF inválido ou inexistente" }
+    },
+    {
+      "name": "API-005: ERRO — Beneficiário Não Encontrado",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "raw": "{\"cpf\":\"987.654.321-00\",\"motivo\":\"DEMISSAO\",\"data_exclusao\":\"2025-07-01\"}"
+        }
+      },
+      "response_esperada": { "status": 404, "erro": "Beneficiário não encontrado" }
+    },
+    {
+      "name": "API-006: ERRO — Body Vazio",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "raw": "{}"
+        }
+      },
+      "response_esperada": { "status": 400, "erro": "cpf, motivo e data_exclusao são obrigatórios" }
+    },
+    {
+      "name": "API-007: ERRO — Token Inválido",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer token_invalido" }
+        ],
+        "body": {
+          "raw": "{\"cpf\":\"123.456.789-09\",\"motivo\":\"DEMISSAO\",\"data_exclusao\":\"2025-07-01\"}"
+        }
+      },
+      "response_esperada": { "status": 401, "erro": "Token inválido ou expirado" }
+    },
+    {
+      "name": "API-008: ERRO — Motivo Inválido",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/beneficiarios/exclusao",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "raw": "{\"cpf\":\"123.456.789-09\",\"motivo\":\"INVALIDO\",\"data_exclusao\":\"2025-07-01\"}"
+        }
+      },
+      "response_esperada": { "status": 422, "erro": "Motivo de exclusão inválido" }
     }
   ]
 }

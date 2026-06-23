@@ -8,8 +8,7 @@
 
 ## 🩸 1. Valores de Referência e Resultados Críticos
 
-**Regra de negócio:** Todo resultado laboratorial fora da faixa crítica
-deve gerar alerta imediato e bloquear a liberação automática.
+**Regra de negócio:** Todo resultado laboratorial fora da faixa crítica deve gerar alerta imediato e bloquear a liberação automática.
 
 | Exame | Unidade | Crítico Baixo | Normal (Adulto) | Crítico Alto | Ação Obrigatória |
 |---|---|---|---|---|---|
@@ -20,7 +19,7 @@ deve gerar alerta imediato e bloquear a liberação automática.
 | Plaquetas | /mm³ | < 20.000 | 150.000 — 400.000 | > 1.000.000 | Alerta urgente |
 | Creatinina | mg/dL | < 0,4 | 0,6 — 1,2 | > 10,0 | Alerta + revisão |
 
-### Cenários de Teste Derivados:
+### Cenários de Teste Derivados
 
 | ID | Cenário | Resultado Esperado |
 |---|---|---|
@@ -34,8 +33,7 @@ deve gerar alerta imediato e bloquear a liberação automática.
 
 ## 🔬 2. Inconsistência Sexo x Tipo de Exame
 
-**Regra de negócio:** Exames específicos por sexo devem ser sinalizados ou
-bloqueados quando incompatíveis com o paciente cadastrado.
+**Regra de negócio:** Exames específicos por sexo devem ser sinalizados ou bloqueados quando incompatíveis com o paciente cadastrado.
 
 | Exame | Sexo Esperado | Comportamento no Sistema |
 |---|---|---|
@@ -44,12 +42,20 @@ bloqueados quando incompatíveis com o paciente cadastrado.
 | Papanicolau (Colo do útero) | Feminino | Bloquear + exibir alerta |
 | FSH / LH (hormônios ciclo) | Feminino | Sinalizar para revisão |
 
+### Cenários de Teste Derivados
+
+| ID | Cenário | Resultado Esperado |
+|---|---|---|
+| CL-006 | PSA solicitado para paciente do sexo feminino | Sistema bloqueia com alerta de inconsistência |
+| CL-007 | Beta-HCG solicitado para paciente do sexo masculino | Sistema sinaliza para revisão |
+| CL-008 | Papanicolau solicitado para paciente do sexo masculino | Sistema bloqueia com alerta de inconsistência |
+| CL-009 | FSH solicitado para paciente do sexo masculino | Sistema sinaliza para revisão |
+
 ---
 
 ## 🏥 3. Regras de Exclusão de Beneficiários
 
-**Contexto:** As operadoras de plano de saúde devem seguir regras da ANS
-(Agência Nacional de Saúde Suplementar) para exclusão de vidas.
+**Contexto:** As operadoras de plano de saúde devem seguir regras da ANS (Agência Nacional de Saúde Suplementar) para exclusão de vidas.
 
 | Motivo | Documentação Obrigatória | Validação no Sistema | Prazo |
 |---|---|---|---|
@@ -62,8 +68,7 @@ bloqueados quando incompatíveis com o paciente cadastrado.
 
 ## ⚗️ 4. Garantia da Qualidade Laboratorial
 
-**Contexto:** Baseado nas boas práticas de GQL (Garantia da Qualidade Laboratorial)
-e nas normas ANVISA/NBR ISO 15189.
+**Contexto:** Baseado nas boas práticas de GQL (Garantia da Qualidade Laboratorial) e nas normas ANVISA/NBR ISO 15189.
 
 | Verificação | Critério de Qualidade | Impacto se Falhar |
 |---|---|---|

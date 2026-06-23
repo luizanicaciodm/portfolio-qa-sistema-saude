@@ -1,5 +1,6 @@
 // Automação E2E — Fluxo Completo do Paciente
 // Ferramenta: Cypress | Portfólio QA — Luiza Nicácio
+// Valores críticos de referência: ver regras-clinicas-laboratoriais.md
 
 describe('Fluxo Completo do Paciente — Sistema de Saúde', () => {
 
@@ -23,17 +24,31 @@ describe('Fluxo Completo do Paciente — Sistema de Saúde', () => {
     cy.contains('Paciente cadastrado com sucesso').should('exist')
   })
 
-  it('CT-E2E-002: Resultado crítico deve gerar alerta médico', () => {
+  it('CT-E2E-002: Resultado crítico ALTO deve gerar alerta médico (Glicose > 500)', () => {
     cy.get('[data-cy=menu-resultados]').click()
     cy.get('[data-cy=btn-novo-resultado]').click()
+    cy.get('[data-cy=campo-paciente]').type('Maria Teste Silva')
     cy.get('[data-cy=campo-exame]').select('Glicose')
-    cy.get('[data-cy=campo-valor]').type('550')  // Valor crítico > 500
+    cy.get('[data-cy=campo-valor]').type('550')  // Crítico alto: > 500 mg/dL
     cy.get('[data-cy=btn-salvar-resultado]').click()
     cy.get('[data-cy=alerta-critico]').should('be.visible')
     cy.contains('VALOR CRÍTICO — Notificar médico imediatamente').should('exist')
   })
 
-  it('CT-E2E-003: Impedir exame PSA para paciente feminina', () => {
+  it('CT-E2E-003: Resultado crítico BAIXO deve gerar alerta médico (Glicose < 40)', () => {
+    cy.get('[data-cy=menu-resultados]').click()
+    cy.get('[data-cy=btn-novo-resultado]').click()
+    cy.get('[data-cy=campo-paciente]').type('Maria Teste Silva')
+    cy.get('[data-cy=campo-exame]').select('Glicose')
+    cy.get('[data-cy=campo-valor]').type('35')  // Crítico baixo: < 40 mg/dL
+    cy.get('[data-cy=btn-salvar-resultado]').click()
+    cy.get('[data-cy=alerta-critico]').should('be.visible')
+    cy.contains('VALOR CRÍTICO — Notificar médico imediatamente').should('exist')
+  })
+
+  it('CT-E2E-004: Impedir exame PSA para paciente do sexo feminino', () => {
+    cy.get('[data-cy=menu-resultados]').click()
+    cy.get('[data-cy=btn-novo-resultado]').click()
     cy.get('[data-cy=campo-paciente]').type('Ana Clara Ferreira')
     cy.get('[data-cy=campo-exame]').select('PSA')
     cy.get('[data-cy=btn-salvar-resultado]').click()
