@@ -30,7 +30,6 @@ Authorization: Bearer {token}
   "data_obito": "YYYY-MM-DD (obrigatório somente se motivo = OBITO)"
 }
 ```
-
 ---
 
 ## 🧪 Cenários de Teste
