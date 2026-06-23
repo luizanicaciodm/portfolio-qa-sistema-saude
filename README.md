@@ -1,4 +1,4 @@
-# 🏥 Portfólio QA — Sistema de Saúde
+# 🏥 Portfólio QA | Sistema de Saúde
 
 > Simulação de um ambiente corporativo real na área da saúde, cobrindo plano de saúde, laboratório clínico e análises clínicas com estratégias de QA de ponta a ponta.
 
@@ -13,7 +13,7 @@
 
 Este portfólio simula o ciclo completo de QA aplicado a um sistema de saúde: **gestão de plano de saúde, exclusão de beneficiários via API, fluxos de pacientes e validação de regras clínicas críticas**.
 
-O diferencial está na combinação de conhecimento técnico em QA com experiência real em **análises clínicas e qualidade laboratorial** — as regras de negócio testadas (valores críticos, inconsistência sexo/exame) vêm da prática, não apenas da documentação do sistema.
+O diferencial está na combinação de conhecimento técnico em QA com experiência real em **análises clínicas e qualidade laboratorial** e as regras de negócio testadas (valores críticos, inconsistência sexo/exame) vêm da prática, não apenas da documentação do sistema.
 
 ---
 
